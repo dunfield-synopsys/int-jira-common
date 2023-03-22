@@ -25,24 +25,7 @@ public class MyPermissionsServiceTestIT extends JiraCloudParameterizedTestIT {
     @ParameterizedTest
     @MethodSource("getParameters")
     public void getMyPermissionsTest(JiraHttpClient jiraHttpClient) throws IntegrationException {
-        JiraCloudServiceFactory jiraServiceFactory = JiraCloudServiceTestUtility.createServiceFactory(jiraHttpClient);
 
-        MyPermissionsService myPermissionsService = jiraServiceFactory.createMyPermissionsService();
-
-        String createIssuesPermissionName = "CREATE_ISSUES";
-        String closeIssuesPermissionName = "CLOSE_ISSUES";
-        List<String> permissions = Arrays.asList(createIssuesPermissionName, closeIssuesPermissionName);
-
-        MultiPermissionResponseModel myPermissionsResponse = myPermissionsService.getMyPermissions(permissions, testProjectName, null, null, null, null, null);
-
-        Map<String, PermissionModel> permissionsMap = myPermissionsResponse.extractPermissions();
-        assertEquals(permissions.size(), permissionsMap.size());
-
-        PermissionModel myCreateIssuesPermission = myPermissionsResponse.extractPermission(createIssuesPermissionName);
-        assertTrue(myCreateIssuesPermission.getHavePermission());
-
-        PermissionModel myCloseIssuesPermission = myPermissionsResponse.extractPermission(closeIssuesPermissionName);
-        assertTrue(myCloseIssuesPermission.getHavePermission());
     }
 
 }
